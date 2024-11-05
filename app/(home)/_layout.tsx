@@ -1,9 +1,20 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet } from "react-native";
 import React from "react";
-import { Slot } from "expo-router";
+import { Stack } from "expo-router";
+
+import { OverlayProvider } from "stream-chat-expo";
+import ChatProvider from "@/providers/ChatProvider";
 
 const HomeLayout = () => {
-  return <Slot />;
+  return (
+    <OverlayProvider>
+      <ChatProvider>
+        <Stack>
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        </Stack>
+      </ChatProvider>
+    </OverlayProvider>
+  );
 };
 
 export default HomeLayout;
