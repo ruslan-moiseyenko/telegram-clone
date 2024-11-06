@@ -1,3 +1,5 @@
+import { useAuth } from "@/hooks/useAuth";
+import { supabase } from "@/lib/supabase";
 import React, { PropsWithChildren, useEffect, useState } from "react";
 import { ActivityIndicator } from "react-native";
 import { StreamChat } from "stream-chat";
@@ -7,17 +9,22 @@ const client = StreamChat.getInstance(process.env.EXPO_PUBLIC_STREAM_API ?? "");
 
 export default function ChatProvider({ children }: PropsWithChildren) {
   const [isReady, setIsReady] = useState(false);
+  const { profile, user } = useAuth();
+  console.log("🚀 ~ ChatProvider ~ profile:", profile);
 
   useEffect(() => {
     const connect = async () => {
       await client.connectUser(
         {
-          id: "jlahey",
-          name: "Jim Lahey",
-          image: "https://i.imgur.com/fR9Jz14.png"
+          id: profile?.id ?? "",
+          name: profile?.full_name ?? "",
+          image: supabase.storage
+            .from("avatars")
+            .getPublicUrl(profile?.avatar_url).data.publicUrl
         },
-        client.devToken("jlahey")
+        client.devToken(profile?.id ?? "")
       );
+
       setIsReady(true);
 
       // const channel = client.channel("messaging", "the_park", {
@@ -28,6 +35,7 @@ export default function ChatProvider({ children }: PropsWithChildren) {
     };
 
     connect();
+
     return () => {
       client.disconnectUser();
       setIsReady(false);
