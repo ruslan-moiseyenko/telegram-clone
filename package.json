@@ -24,6 +24,7 @@
     "expo": "~51.0.28",
     "expo-constants": "~16.0.2",
     "expo-font": "~12.0.9",
+    "expo-image-picker": "~15.0.7",
     "expo-linking": "~6.3.1",
     "expo-router": "~3.5.23",
     "expo-splash-screen": "~0.27.5",
@@ -39,8 +40,8 @@
     "react-native-screens": "3.31.1",
     "react-native-url-polyfill": "^2.0.0",
     "react-native-web": "~0.19.10",
-    "stream-chat-expo": "^5.41.1",
-    "expo-image-picker": "~15.0.7"
+    "stream-chat": "^8.43.0",
+    "stream-chat-expo": "^5.41.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

@@ -1,5 +1,6 @@
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/lib/supabase";
+import { tokenProvider } from "@/utils/tokenProvider";
 import React, { PropsWithChildren, useEffect, useState } from "react";
 import { ActivityIndicator } from "react-native";
 import { StreamChat } from "stream-chat";
@@ -9,7 +10,7 @@ const client = StreamChat.getInstance(process.env.EXPO_PUBLIC_STREAM_API ?? "");
 
 export default function ChatProvider({ children }: PropsWithChildren) {
   const [isReady, setIsReady] = useState(false);
-  const { profile, user } = useAuth();
+  const { profile } = useAuth();
 
   useEffect(() => {
     const connect = async () => {
@@ -23,7 +24,7 @@ export default function ChatProvider({ children }: PropsWithChildren) {
                 .from("avatars")
                 .getPublicUrl(profile?.avatar_url).data.publicUrl
             },
-            client.devToken(profile?.id ?? "")
+            tokenProvider
           );
 
           setIsReady(true);
